@@ -2,35 +2,41 @@
 #include<stdio.h>
 #include "graph.c"
 
-void swap(float* x, float* y){
+void swapF(float* x, float* y){
 	float temp = *x;
 	*x= *y;
 	*y = temp;
 }
 
+void swapI(int* x, int* y){
+	int temp = *x;
+	*x= *y;
+	*y = temp;
+}
+
 int Rank(FILE* f, float* r, int size){
-	float temp[size][2];
+	float temp[size];
+	int tmp_idx[size];
 
 	//creating a temporary matrix, with index as column 2 elements.
 	for(int i = 0; i < size; i++){
-		temp[i][0] = r[i];
-		temp[i][1] = i+1;
+		temp[i] = r[i];
+		tmp_idx[i] = i+1;
 	}
 
-	
 	//to sort the column 0 in descending order
 	for(int i = 0; i < size; i++){
 		for(int j = 0; j < size-i; j++){
-			if(temp[j+1][0] > temp[j][0]){
-				swap(&temp[j][0], &temp[j+1][0]);
-				swap(&temp[j][1], &temp[j+1][1]);
+			if(temp[j+1] > temp[j]){
+				swapF(&temp[j], &temp[j+1]);
+				swapI(&tmp_idx[j], &tmp_idx[j+1]);
 			}
 		}
 	}
 
 	//to print the temp matrix
 	for(int i = 0; i < size; i++){
-		fprintf(f, "%d (%f)\n", (int)temp[i][1], temp[i][0]);
+		fprintf(f, "%d (%f)\n", (int)tmp_idx[i], temp[i]);
 	}
 
 }
@@ -38,12 +44,6 @@ int Rank(FILE* f, float* r, int size){
 int main(){
 	FILE* f_in = fopen("input.txt", "r");
 	FILE* f_out = fopen("output.txt", "w");
-
-	FILE* temp_in = stdin;
-	FILE* temp_out = stdout;
-
-	stdin = f_in;
-	stdout = f_out;
 
 	int v;
 	char temp;
@@ -67,6 +67,5 @@ int main(){
 	}
 	fprintf(f_out, "\n");
 
-	stdin = temp_in;
-	stdout = temp_out;
+	DelGraph(g);
 }
