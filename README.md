@@ -10,8 +10,8 @@
 		Matrix, Add non-zero elements to the matrix, Change values of already added elements, Delete the elements, Print the entire matrix etc.
 -	"graph.c":
 		In this file we have implemented a graph data structure using the adjacency matrix representation. We have chosen this representation to reduce some redundancy
-		in the code. The adjancency matrix is represent in the CSR format whose functions are written in "matrix.c". It has functions to create/initialise a graph,
-		Add\remove edges in a graph, PageRank function to rank vertices on the basis of importance
+		in the code. The adjancency matrix is represented in the CSR format whose functions are written in "matrix.c". It has functions to create/initialise a graph,
+		Add\remove edges in a graph, PageRank function to rank vertices on the basis of importance.
 -	"main.c":
 		This file contains the main() function. It brings together all the files files through include statements and displays the PageRank functionality.
 
