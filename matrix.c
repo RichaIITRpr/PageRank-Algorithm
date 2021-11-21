@@ -64,6 +64,7 @@ void AddValue(Sparse_matrix A, double val, int row, int col){
 	}
 	node n = GetNode(val, col);
 	if(A->row_index[row] == 0){
+		n->next = A->values;
 		A->values = n;
 	}
 	else{
@@ -113,7 +114,7 @@ void ChangeVal(Sparse_matrix A, int row, int col, double new_val){
 
 Sparse_matrix DupMx(Sparse_matrix A){
 	Sparse_matrix B = CSRMatrix(A->rows, A->cols);
-	for(int i = 0; i < A->rows; i++){
+	for(int i = 0; i <= A->rows; i++){
 		B->row_index[i] = A->row_index[i];
 	}
 	node cur_A = A->values;
@@ -125,7 +126,9 @@ Sparse_matrix DupMx(Sparse_matrix A){
 	while(cur_A != NULL){
 		cur_B->next = GetNode(cur_A->val, cur_A->col);
 		cur_A = cur_A->next;
+		cur_B = cur_B->next;
 	}
+	return B;
 }
 
 Sparse_matrix Normalize(Sparse_matrix A){
