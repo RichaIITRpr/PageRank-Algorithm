@@ -8,7 +8,7 @@ typedef struct Sparse_matrix* Sparse_matrix;
 typedef struct node* node;
 
 struct node{
-	double val;
+	float val;
 	int col;
 	struct node* next;
 };
@@ -29,7 +29,7 @@ Sparse_matrix CSRMatrix(int rows, int cols){
 	return A;
 }
 
-node GetNode(double value, int col){
+node GetNode(float value, int col){
 	node n = malloc(sizeof(*n));
 	n->val = value;
 	n->col = col;
@@ -50,7 +50,7 @@ void DelMx(Sparse_matrix A){
 	free(A);
 }
 
-void AddValue(Sparse_matrix A, double val, int row, int col){
+void AddValue(Sparse_matrix A, float val, int row, int col){
 	int num_el = A->row_index[row+1] - A->row_index[row];
 	node cur = A->values;
 	node prev = cur;
@@ -63,7 +63,7 @@ void AddValue(Sparse_matrix A, double val, int row, int col){
 		cur = cur->next;
 	}
 	node n = GetNode(val, col);
-	if(A->row_index[row] == 0){
+	if(A->values == NULL || cur == prev){
 		n->next = A->values;
 		A->values = n;
 	}
@@ -101,7 +101,7 @@ void DelValue(Sparse_matrix A, int row, int col){
 	}
 }
 
-void ChangeVal(Sparse_matrix A, int row, int col, double new_val){
+void ChangeVal(Sparse_matrix A, int row, int col, float new_val){
 	node cur = A->values, prev;
 	for(int i = 0; i < A->row_index[row]; i++)	cur = cur->next;
 	int count = 0, num_el = A->row_index[row+1] - A->row_index[row];
